@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.title("서울");
         markerOptions.snippet("한국의 수도");
         mMap.addMarker(markerOptions);
-
+        // PUSH 실험하기 나중에 지우자 !!
         mMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
