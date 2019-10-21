@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private EditText mEditTextSearchKeyword;
     private String mJsonString;
-
+    Button intent_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,17 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new UsersAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
 
-        Button button_go = (Button) findViewById(R.id.button_go);
+        // Sub로 넘어가는 버튼
+        intent_btn = findViewById(R.id.button_go);
+        intent_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //인텐트 선언 -> ㅕㄴ재액티비티, 넘어갈 액티비티
+                Intent intent = new Intent(MainActivity.this,SubActivity.class);
+                //인텐트 시랭
+                startActivity(intent);
+            }
+        });
 
         Button button_all = (Button) findViewById(R.id.button_main_all);
         button_all.setOnClickListener(new View.OnClickListener() {
@@ -214,10 +224,5 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "showResult : ", e);
         }
 
-    }
-
-    public void onClick(View view) {
-        Intent intent = new Intent(this, SubActivity.class);
-        startActivity(intent);
     }
 }
