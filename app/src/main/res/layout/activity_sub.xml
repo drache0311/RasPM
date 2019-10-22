@@ -5,13 +5,17 @@
 
 
  <!-- layout_weight가 한 화면에 보이는 항목 수 : 드래그로 위아래 이동 가능-->
+
  <androidx.recyclerview.widget.RecyclerView
      android:layout_width="match_parent"
      android:layout_height="0dp"
      android:layout_weight="6"
      android:layout_margin="5dp"
      android:padding="5dp"
+     android:clickable="true"
+     android:onClick="onClick"
      android:id="@+id/listView_main_list" />
+
 
  <Button
      android:layout_margin="2dp"
