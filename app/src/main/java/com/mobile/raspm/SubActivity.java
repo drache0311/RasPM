@@ -50,6 +50,7 @@ public class SubActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private EditText mEditTextSearchKeyword;
     private String mJsonString;
+    private String bookname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,19 +73,32 @@ public class SubActivity extends AppCompatActivity {
         mAdapter = new UsersAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
 
-
-        Button button_all = (Button) findViewById(R.id.button_main_all);
-        button_all.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        // 원래 버튼용도인데 없애야 하니 일단 주석함
+       // Button button_all = (Button) findViewById(R.id.button_main_all);
+       // button_all.setOnClickListener(new View.OnClickListener() {
+       //     public void onClick(View v) {
 
                 mArrayList.clear();
                 mAdapter.notifyDataSetChanged();
 
                 GetData task = new GetData();
                 task.execute( "http://" + IP_ADDRESS + "/getJson.php", "");
+        //    }
+       // });
+
+ /* 일단대기
+        mRecyclerView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                bookname = mAdapter.name;
+                // 메인으로 이동하기
+                    Intent intent = new Intent(SubActivity.this, MainActivity.class);
+                    intent.putExtra("bookname", bookname);
+                    startActivity(intent);
             }
         });
 
+  */
     }
 
 
@@ -120,6 +134,8 @@ public class SubActivity extends AppCompatActivity {
                 mJsonString = result;
                 showResult();
             }
+
+
         }
 
 
@@ -194,7 +210,7 @@ public class SubActivity extends AppCompatActivity {
         String TAG_CITYNAME = "cityName";
         String TAG_pm10Value = "pm10Value";
         String TAG_pm25Value ="pm25Value";
-
+        String TAG_display = "display";
 
         try {
             JSONObject jsonObject = new JSONObject(mJsonString);
@@ -207,12 +223,14 @@ public class SubActivity extends AppCompatActivity {
                 String cityName = item.getString(TAG_CITYNAME);
                 String pm10Value = item.getString(TAG_pm10Value);
                 String pm25Value = item.getString(TAG_pm25Value);
+                int display = item.getInt(TAG_display);
 
                 PersonalData personalData = new PersonalData();
 
                 personalData.setMember_cityName(cityName);
                 personalData.setMember_pm10Value(pm10Value);
                 personalData.setMember_pm25Value(pm25Value);
+                personalData.setMember_display(display);
 
                 mArrayList.add(personalData);
                 mAdapter.notifyDataSetChanged();

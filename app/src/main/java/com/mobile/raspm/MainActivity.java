@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         String TAG_CITYNAME = "cityName";
         String TAG_pm10Value = "pm10Value";
         String TAG_pm25Value ="pm25Value";
-
+        String TAG_display = "display";
 
         try {
             JSONObject jsonObject = new JSONObject(mJsonString);
@@ -206,12 +206,14 @@ public class MainActivity extends AppCompatActivity {
                 String cityName = item.getString(TAG_CITYNAME);
                 String pm10Value = item.getString(TAG_pm10Value);
                 String pm25Value = item.getString(TAG_pm25Value);
+                int display = item.getInt(TAG_display);
 
                 PersonalData personalData = new PersonalData();
 
                 personalData.setMember_cityName(cityName);
                 personalData.setMember_pm10Value(pm10Value);
                 personalData.setMember_pm25Value(pm25Value);
+                personalData.setMember_display(display);
 
                 mArrayList.add(personalData);
                 mAdapter.notifyDataSetChanged();

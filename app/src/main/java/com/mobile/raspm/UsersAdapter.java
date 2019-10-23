@@ -2,6 +2,7 @@ package com.mobile.raspm;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
 
     private ArrayList<PersonalData> mList = null;
     private Activity context = null;
-
+    static String name;
 
     public UsersAdapter(Activity context, ArrayList<PersonalData> list) {
         this.context = context;
         this.mList = list;
+
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -29,7 +31,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         protected TextView cityName;
         protected TextView pm10Value;
         protected TextView pm25Value;
-
+        protected int display;
 
         public CustomViewHolder(View view) {
             super(view);
@@ -50,7 +52,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder viewholder, final int position) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder viewholder, final int position) {
 
         // 값 설정 ( set )
         viewholder.cityName.setText(mList.get(position).getMember_cityName());
@@ -64,7 +66,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         viewholder.cityName.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName(), Toast.LENGTH_SHORT).show();
+                if(mList.get(position).getMember_display()==0) { // display가 0이면 밑의 문 실행 !!!
+                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName()+"디스플=="+mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
+                    UsersAdapter.name = mList.get(position).getMember_cityName();
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    v.getContext().startActivity(intent);
+                }
             }
         });
     }
