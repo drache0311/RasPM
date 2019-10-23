@@ -80,7 +80,7 @@ public class SubActivity extends AppCompatActivity {
 
                 mArrayList.clear();
                 mAdapter.notifyDataSetChanged();
-
+                // Json 데이터 가져오기
                 GetData task = new GetData();
                 task.execute( "http://" + IP_ADDRESS + "/getJson.php", "");
         //    }
