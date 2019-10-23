@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHolder> implements View.OnClickListener {
+//implements View.OnClickListener 맨 밑의 onClick 쓰려면 이거 추가
+public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHolder>  {
 
     private ArrayList<PersonalData> mList = null;
     private Activity context = null;
@@ -58,7 +58,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         viewholder.pm25Value.setText(mList.get(position).getMember_pm25Value());
 
         // 클릭리스너
-        viewholder.cityName.setOnClickListener(this);
+        //viewholder.cityName.setOnClickListener(this);
+
+        // (강서)구 를 클릭하면 mList.get(position).getMember_cityName() 으로 강서구라는 String값을 가져옴
+        viewholder.cityName.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -66,18 +74,19 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         return (null != mList ? mList.size() : 0);
     }
 
-
+/*
     // Click @@@@@@@@@@@  하면은 똑같은 값만 나온다 구글에 리사이클러뷰 아이템클릭 쳐서 내부 글자 따오는거 찾아보자
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.textView_list_cityName:
                 Toast.makeText(context, "TITLE : " + R.id.textView_list_cityName, Toast.LENGTH_SHORT).show();
+
                 break;
 
         }
     }
-
+*/
 
 }
 
