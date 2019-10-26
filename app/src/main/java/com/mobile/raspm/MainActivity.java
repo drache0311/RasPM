@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText mEditTextName;
     private EditText mEditTextCountry;
-    private TextView mTextViewResult;
     private ArrayList<PersonalData> mArrayList;
     private UsersAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -46,13 +45,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
-
-
 
         mArrayList = new ArrayList<>();
 
@@ -71,19 +65,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button_all = (Button) findViewById(R.id.button_main_all);
-        button_all.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
                 mArrayList.clear();
                 mAdapter.notifyDataSetChanged();
 
                 MainActivity.GetData task = new MainActivity.GetData();
                 task.execute( "http://" + IP_ADDRESS + "/getBook.php", "");
-
-            }
-        });
-
     }
 
 
@@ -107,12 +93,10 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            mTextViewResult.setText(result);
             Log.d(TAG, "response - " + result);
 
             if (result == null){
 
-                mTextViewResult.setText(errorString);
             }
             else {
 

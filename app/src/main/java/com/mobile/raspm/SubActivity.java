@@ -44,7 +44,6 @@ public class SubActivity extends AppCompatActivity {
 
     private EditText mEditTextName;
     private EditText mEditTextCountry;
-    private TextView mTextViewResult;
     private ArrayList<PersonalData> mArrayList;
     private UsersAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -57,14 +56,9 @@ public class SubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub);
 
-        mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-
-        mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
 
 
@@ -73,32 +67,14 @@ public class SubActivity extends AppCompatActivity {
         mAdapter = new UsersAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
 
-        // 원래 버튼용도인데 없애야 하니 일단 주석함
-       // Button button_all = (Button) findViewById(R.id.button_main_all);
-       // button_all.setOnClickListener(new View.OnClickListener() {
-       //     public void onClick(View v) {
-
                 mArrayList.clear();
                 mAdapter.notifyDataSetChanged();
                 // Json 데이터 가져오기
                 GetData task = new GetData();
                 task.execute( "http://" + IP_ADDRESS + "/getJson.php", "");
-        //    }
-       // });
 
- /* 일단대기
-        mRecyclerView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                bookname = mAdapter.name;
-                // 메인으로 이동하기
-                    Intent intent = new Intent(SubActivity.this, MainActivity.class);
-                    intent.putExtra("bookname", bookname);
-                    startActivity(intent);
-            }
-        });
 
-  */
+
     }
 
 
@@ -122,12 +98,10 @@ public class SubActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            mTextViewResult.setText(result);
             Log.d(TAG, "response - " + result);
 
             if (result == null){
 
-                mTextViewResult.setText(errorString);
             }
             else {
 
@@ -249,22 +223,5 @@ public class SubActivity extends AppCompatActivity {
     //복사 후
 
 
-
-
-
-
-
-
-
-
-/*
-    // 누르면 MainActivity로 이동
-    public void onClick(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-
- */
 
 }

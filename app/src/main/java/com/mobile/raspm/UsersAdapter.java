@@ -79,15 +79,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
             public void onClick(View v){
                 if(mList.get(position).getMember_display()==0) { // display가 0이면 밑의 문 실행 !!!
                     Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName()+"디스플=="+mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
-                    // 여기서 바로 php파일 불러와서 display를 1로 변경할 것인지
-                    // 아니면 intent에 putExtra로 값(mList의cityname)을 넣어서 다른 Activity에서 할것인지 와서 정하자
-                    UsersAdapter.name = mList.get(position).getMember_cityName();
 
                     UpdateData task = new UpdateData();
-                    task.execute( "http://" + IP_ADDRESS + "/updateDb.php", "");
+                    task.execute( "http://" + IP_ADDRESS + "/updateDb.php", mList.get(position).getMember_cityName());
 
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     v.getContext().startActivity(intent);
+
                 }
             }
         });
@@ -103,10 +101,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         @Override
         protected String doInBackground(String... params) {
 
-            String name = UsersAdapter.name;
-
             String serverURL = (String)params[0];
-            String postParameters = "name=" + name;
+            String bookName = (String)params[1];
+            String postParameters = "name=" + bookName;
 
 
             try {
@@ -165,6 +162,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
 
         }
     }
+
+
+
+
+
+
 
 
 }
