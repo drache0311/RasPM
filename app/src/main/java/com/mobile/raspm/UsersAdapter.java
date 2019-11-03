@@ -90,17 +90,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
                     v.getContext().startActivity(intent);
 
                 } else if (mList.get(position).getMember_display() == 1) { // display가 1이면 밑의 문 실행 !!!
+                    // 맨 밑의 소스 ( 삭제할지 안할지 정하는 알림창 )
                     show(v,position);
-/*
-                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
-
-                    UpdateData task = new UpdateData();
-                    task.execute("http://" + IP_ADDRESS + "/deleteDb.php", mList.get(position).getMember_cityName());
-
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
- */
-
                 }
             }
         });
@@ -179,13 +170,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         }
     }
 
+    // 알림창 뜬 후 Yes면 삭제 , No면은 삭제안함
 void show(final View v,final int position){
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setTitle("즐겨찾기 삭제");
     builder.setMessage("삭제하시겠습니까?");
+    // Yes 클릭시
     builder.setPositiveButton("예",
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+                    // display를 0으로 바꿈
                     Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
 
                     UpdateData task = new UpdateData();
@@ -195,6 +189,7 @@ void show(final View v,final int position){
                     v.getContext().startActivity(intent);
                 }
             });
+    // No 클릭 시
     builder.setNegativeButton("아니오",
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
