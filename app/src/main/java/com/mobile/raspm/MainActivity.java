@@ -31,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
     private static String TAG = "phptest";
 
-    private EditText mEditTextName;
-    private EditText mEditTextCountry;
     private ArrayList<PersonalData> mArrayList;
     private UsersAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private EditText mEditTextSearchKeyword;
     private String mJsonString;
-    Button intent_btn;
+    Button intent_btn; // 즐겨찾기로 이동할 버튼
+    private String delCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-                mArrayList.clear();
-                mAdapter.notifyDataSetChanged();
+        mArrayList.clear();
+        mAdapter.notifyDataSetChanged();
 
-                MainActivity.GetData task = new MainActivity.GetData();
-                task.execute( "http://" + IP_ADDRESS + "/getBook.php", "");
+        MainActivity.GetData task = new MainActivity.GetData();
+        task.execute( "http://" + IP_ADDRESS + "/getBook.php", "");
+
     }
 
 

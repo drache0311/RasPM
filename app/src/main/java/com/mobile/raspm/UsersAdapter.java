@@ -1,7 +1,9 @@
 package com.mobile.raspm;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -73,22 +75,36 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         // 클릭리스너
         //viewholder.cityName.setOnClickListener(this);
 
-        // (강서)구 를 클릭하면 mList.get(position).getMember_cityName() 으로 강서구라는 String값을 가져옴
+        // 즐겨찾기 추가할 지 삭제할 지 작동하는 곳
+        // 서브에서 (강서)구 를 클릭하면 mList.get(position).getMember_cityName() 으로 강서구라는 String값을 가져옴
         viewholder.cityName.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                if(mList.get(position).getMember_display()==0) { // display가 0이면 밑의 문 실행 !!!
-                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName()+"디스플=="+mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                if (mList.get(position).getMember_display() == 0) { // display가 0이면 밑의 문 실행 !!!
+                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
 
                     UpdateData task = new UpdateData();
-                    task.execute( "http://" + IP_ADDRESS + "/updateDb.php", mList.get(position).getMember_cityName());
+                    task.execute("http://" + IP_ADDRESS + "/updateDb.php", mList.get(position).getMember_cityName());
 
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     v.getContext().startActivity(intent);
 
+                } else if (mList.get(position).getMember_display() == 1) { // display가 1이면 밑의 문 실행 !!!
+                    show(v,position);
+/*
+                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
+
+                    UpdateData task = new UpdateData();
+                    task.execute("http://" + IP_ADDRESS + "/deleteDb.php", mList.get(position).getMember_cityName());
+
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    v.getContext().startActivity(intent);
+ */
+
                 }
             }
         });
+
     }
 
     @Override
@@ -96,7 +112,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         return (null != mList ? mList.size() : 0);
     }
 
-    // 업데이트 하는 곳 인데 업데이트 안됨 집가서 확인 ㄱㄱ
+    // 업데이트 하는 곳
     private class UpdateData extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -163,7 +179,34 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         }
     }
 
+void show(final View v,final int position){
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle("즐겨찾기 삭제");
+    builder.setMessage("삭제하시겠습니까?");
+    builder.setPositiveButton("예",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
 
+                    UpdateData task = new UpdateData();
+                    task.execute("http://" + IP_ADDRESS + "/deleteDb.php", mList.get(position).getMember_cityName());
+
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
+    builder.setNegativeButton("아니오",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(v.getContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                }
+            });
+    builder.show();
+
+
+
+
+}
 
 
 
