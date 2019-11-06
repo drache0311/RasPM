@@ -2,6 +2,8 @@ package com.mobile.raspm;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -9,16 +11,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class FrontActivity extends AppCompatActivity {
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+ public class FrontActivity extends AppCompatActivity {
 
     private Button button1;
     private TextView txtResult;
-
+    String address;
+    LatLng currentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,18 @@ public class FrontActivity extends AppCompatActivity {
                             "경도 : " + latitude + "\n" +
                             "고도  : " + altitude);
 
+                    // location에 위도경도 담기
+                    //location1.setLatitude(latitude);
+                    //location1.setLongitude(longitude);
+
+                    // location의 위도경도를 하나로 담기
+      //              currentPosition = new LatLng(latitude,longitude);
+
+                    // address에 주소 담기
+        //            address = getCurrentAddress(currentPosition);
+
+          //          Toast.makeText(this, address, Toast.LENGTH_LONG).show();
+
                     lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                             1000,
                             1,
@@ -94,5 +116,45 @@ public class FrontActivity extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
         }
     };
+
+/*
+    // 위도경도를 주소로 변환해주는 메소드
+    public String getCurrentAddress(LatLng latlng) {
+
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+
+            addresses = geocoder.getFromLocation(
+                    latlng.latitude,
+                    latlng.longitude,
+                    1);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+
+        }
+
+
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            return "주소 미발견";
+
+        } else {
+            Address address = addresses.get(0);
+            return address.getAddressLine(0).toString();
+        }
+
+    }
+
+
+ */
 
 }
