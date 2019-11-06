@@ -19,14 +19,19 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
  public class FrontActivity extends AppCompatActivity {
 
-    private Button button1;
-    private TextView txtResult;
+
+ //   private TextView txtResult;
+    private TextView currentCity; // 위에 보여줄 현재 지역구
+    private TextView pm10Value;
+    private TextView pm25Value;
     String address;
     LatLng currentPosition;
 
@@ -34,8 +39,12 @@ import java.util.Locale;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front);
-        button1 = (Button)findViewById(R.id.button1);
-        txtResult = (TextView)findViewById(R.id.txtResult);
+
+        currentCity = findViewById(R.id.currentCity);
+        pm10Value = findViewById(R.id.pm10Value);
+        pm25Value = findViewById(R.id.pm25Value);
+        // txtResult = (TextView)findViewById(R.id.txtResult);
+
 
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -52,6 +61,15 @@ import java.util.Locale;
                     double latitude = location.getLatitude();
                     double altitude = location.getAltitude();
 
+
+                    // 이 자리에 현재위치 지역구 이름 넣을꺼임
+                    currentCity.setText("위치정보 : " + provider + "\n" +
+                            "위도 : " + longitude + "\n" +
+                            "경도 : " + latitude + "\n" +
+                            "고도  : " + altitude);
+
+                    pm10Value.setText("여기가 PM10자리");
+                    pm25Value.setText("여기가 PM25자리");
                     // 여기서 위도,경도를 구할 수 있는데 그걸로 서울시 OO구 (지역구)를 가져와서
                     // 이 화면에서 바로 그 지역구의 미세먼지를 보여주자
                     // + 미세먼지 값에 따른 아이콘의 표정변화 추가 (이미지)
@@ -66,11 +84,12 @@ import java.util.Locale;
                     //   ㅣ라즈베리ㅣㅣ라즈베리ㅣ   <-- 왼쪽엔 진짜 라즈베리 / 2번째엔 가짜 라즈베리
                     //   └--------┘└--------┘
 
+                    /*
                     txtResult.setText("위치정보 : " + provider + "\n" +
                             "위도 : " + longitude + "\n" +
                             "경도 : " + latitude + "\n" +
                             "고도  : " + altitude);
-
+                     */
                     // location에 위도경도 담기
                     //location1.setLatitude(latitude);
                     //location1.setLongitude(longitude);
@@ -101,10 +120,12 @@ import java.util.Locale;
             double latitude = location.getLatitude();
             double altitude = location.getAltitude();
 
+            /*
             txtResult.setText("위치정보 : " + provider + "\n" +
                     "위도 : " + longitude + "\n" +
                     "경도 : " + latitude + "\n" +
                     "고도  : " + altitude);
+             */
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {

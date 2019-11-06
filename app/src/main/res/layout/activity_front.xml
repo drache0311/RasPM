@@ -7,15 +7,33 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button1"
-        android:text="내 위치정보 가져오기"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/currentCity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/smile"
+        android:src="@drawable/smile" />
+
+<!--
     <TextView
         android:id="@+id/txtResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+-->
+
+    <TextView
+        android:id="@+id/pm10Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/pm25Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>
