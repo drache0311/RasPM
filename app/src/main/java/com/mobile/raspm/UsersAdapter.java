@@ -28,7 +28,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
 
     private ArrayList<PersonalData> mList = null;
     private Activity context = null;
-    static String name;
+    static String currentName; // 여기다가 front액티비티의 address값을 넣어볼까?
+    static int currentPm10;
+    static int currentPm25;
     private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
     private static String TAG = "phptest";
 
@@ -36,7 +38,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     public UsersAdapter(Activity context, ArrayList<PersonalData> list) {
         this.context = context;
         this.mList = list;
-
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -45,6 +46,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         protected TextView pm10Value;
         protected TextView pm25Value;
         protected int display;
+        protected String currentName;
+        protected int currentPm10;
+        protected int currentPm25;
 
         public CustomViewHolder(View view) {
             super(view);
@@ -52,6 +56,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
             this.cityName = (TextView) view.findViewById(R.id.textView_list_cityName);
             this.pm10Value = (TextView) view.findViewById(R.id.textView_list_pm10Value);
             this.pm25Value = (TextView) view.findViewById(R.id.textView_list_pm25Value);
+
         }
     }
 
@@ -67,10 +72,18 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull final CustomViewHolder viewholder, final int position) {
 
+
         // 값 설정 ( set )
         viewholder.cityName.setText(mList.get(position).getMember_cityName());
         viewholder.pm10Value.setText(mList.get(position).getMember_pm10Value());
         viewholder.pm25Value.setText(mList.get(position).getMember_pm25Value());
+        viewholder.currentName = (mList.get(position).getMember_cityName());
+        viewholder.currentPm10 = Integer.parseInt(mList.get(position).getMember_pm10Value());
+        viewholder.currentPm25 = Integer.parseInt(mList.get(position).getMember_pm25Value());
+
+        currentName = viewholder.currentName;
+        currentPm10 = viewholder.currentPm10;
+        currentPm25 = viewholder.currentPm25;
 
         // 클릭리스너
         //viewholder.cityName.setOnClickListener(this);
@@ -197,10 +210,6 @@ void show(final View v,final int position){
                 }
             });
     builder.show();
-
-
-
-
 }
 
 

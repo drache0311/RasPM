@@ -1,39 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:id="@+id/frontMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/currentCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/smile"
-        android:src="@drawable/smile" />
+        android:orientation="vertical"
+        android:gravity="center" >
 
-<!--
-    <TextView
-        android:id="@+id/txtResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
--->
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20pt"
+            android:gravity="center"
+            android:padding="5dp"
+            android:id="@+id/currentCity" />
 
-    <TextView
-        android:id="@+id/pm10Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/pm25Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/currentTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:gravity="center" />
+        <ImageView
+            android:id="@+id/smile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/smile" />
+
+        <TextView
+            android:id="@+id/pmText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:gravity="center" />
 
 
+        <TextView
+            android:id="@+id/pm10Value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/rasImage"
+                android:background="@drawable/raslogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50pt"
+                android:text="라즈베리"/>
+
+            <Button
+                android:id="@+id/rasImage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5pt"
+                android:text="라즈베리2" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
