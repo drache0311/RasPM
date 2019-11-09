@@ -12,6 +12,7 @@
         android:orientation="vertical"
         android:gravity="center" >
 
+        <!-- OO구 표시함 -->
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="80dp"
             android:layout_height="0dp"
@@ -21,6 +22,7 @@
             android:padding="5dp"
             android:id="@+id/currentCity" />
 
+        <!-- 현재시간 -->
         <TextView
             android:id="@+id/currentTime"
             android:layout_width="match_parent"
@@ -29,12 +31,15 @@
             android:textStyle="bold"
             android:textSize="15dp"
             android:gravity="center" />
+
+        <!-- 미세먼지 수치에 따른 표정 이미지 -->
         <ImageView
             android:id="@+id/smile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/smile" />
 
+        <!-- 미세먼지 수치에 따른 좋음,보통,나쁨,매우나쁨 -->
         <TextView
             android:id="@+id/pmText"
             android:layout_width="match_parent"
@@ -44,7 +49,7 @@
             android:textSize="40dp"
             android:gravity="center" />
 
-
+        <!-- 미세먼지 수치 -->
         <TextView
             android:id="@+id/pm10Value"
             android:layout_width="match_parent"
@@ -65,6 +70,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <!-- 라즈베리 1 버튼 이미지 -->
             <Button
                 android:id="@+id/rasImage"
                 android:background="@drawable/raslogo"
@@ -73,6 +79,7 @@
                 android:layout_marginLeft="50pt"
                 android:text="라즈베리"/>
 
+            <!-- 라즈베리 2 버튼 이미지 -->
             <Button
                 android:id="@+id/rasImage2"
                 android:layout_width="wrap_content"

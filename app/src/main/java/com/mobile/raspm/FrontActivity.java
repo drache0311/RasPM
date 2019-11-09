@@ -54,8 +54,8 @@ import java.util.List;
      private ImageView faceIcon; // 얼굴
     String address; // OO구 담을 변수
     LatLng currentPosition;
-     long now ;
-     Date date;
+     long now ; // 시간 담음
+     Date date;  // 시간 담음
 
 
 
@@ -66,6 +66,11 @@ import java.util.List;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front);
+
+
+        //
+        //  변수들에 View 매칭시켜줌
+        //
 
         layout = findViewById(R.id.frontMain);
         mRecyclerView = (RecyclerView) findViewById(R.id.currentCity);
@@ -79,8 +84,6 @@ import java.util.List;
         mRecyclerView.setAdapter(mAdapter);
         // txtResult = (TextView)findViewById(R.id.txtResult);
         currentTime = findViewById(R.id.currentTime);
-
-
 
 
         final Geocoder geocoder = new Geocoder(this);
@@ -101,30 +104,21 @@ import java.util.List;
 
 
 
+        if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions( FrontActivity.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },0 );
+        }else{
+          Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+          String provider = location.getProvider();
+          double longitude = location.getLongitude();
+          double latitude = location.getLatitude();
+          double altitude = location.getAltitude();
 
-
-
-
-
-
-                if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                    ActivityCompat.requestPermissions( FrontActivity.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
-                            0 );
-                }
-                else{
-                        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        String provider = location.getProvider();
-                        double longitude = location.getLongitude();
-                        double latitude = location.getLatitude();
-                        double altitude = location.getAltitude();
-
-                    try {
-                        list = geocoder.getFromLocation(latitude,longitude, 4);
-                    }catch (IOException e){
-                        e.printStackTrace();
-                        Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
-                    }
+           try {
+               list = geocoder.getFromLocation(latitude,longitude, 4);
+            }catch (IOException e){
+                e.printStackTrace();
+                Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
+           }
                     // 이 자리에 현재위치 지역구 이름 넣을꺼임
                     // AddressLine(0) 이 서울시 OO구 인데 이걸 OO구만 짜르자
                  /*   currentCity.setText("위도 : " + longitude + "\n" +
@@ -135,28 +129,28 @@ import java.util.List;
 
 
 
-                    // 미세먼지 수치에 따라 표정 아이콘 변화시키기
-                    if(UsersAdapter.currentPm10<=30){ // 미세먼지 좋음
-                        faceIcon.setImageResource(R.drawable.over0);
-                        layout.setBackgroundResource(R.color.colorBlue);
-                        pmText.setText("좋음");
-                        pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-                    }else if(UsersAdapter.currentPm10<=80){ // 미세먼지 보통
-                        faceIcon.setImageResource(R.drawable.over180);
-                        layout.setBackgroundResource(R.color.colorGreen);
-                        pmText.setText("보통");
-                        pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-                    }else if(UsersAdapter.currentPm10<=150){ // 미세먼지 나쁨
-                        faceIcon.setImageResource(R.drawable.over150);
-                        layout.setBackgroundResource(R.color.colorYellow);
-                        pmText.setText("나쁨");
-                        pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-                    }else{ // 미세먼지 매우나쁨
-                        faceIcon.setImageResource(R.drawable.over180);
-                        layout.setBackgroundResource(R.color.colorOrange);
-                        pmText.setText("매우나쁨");
-                        pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-                    }
+            // 미세먼지 수치에 따라 표정 아이콘 변화시키기
+            if(UsersAdapter.currentPm10<=30){ // 미세먼지 좋음
+                faceIcon.setImageResource(R.drawable.over0);
+                layout.setBackgroundResource(R.color.colorBlue);
+                pmText.setText("좋음");
+                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
+            }else if(UsersAdapter.currentPm10<=80){ // 미세먼지 보통
+                faceIcon.setImageResource(R.drawable.over180);
+                layout.setBackgroundResource(R.color.colorGreen);
+                pmText.setText("보통");
+                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
+            }else if(UsersAdapter.currentPm10<=150){ // 미세먼지 나쁨
+                faceIcon.setImageResource(R.drawable.over150);
+                layout.setBackgroundResource(R.color.colorYellow);
+                pmText.setText("나쁨");
+                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
+            }else{ // 미세먼지 매우나쁨
+                faceIcon.setImageResource(R.drawable.over180);
+                layout.setBackgroundResource(R.color.colorOrange);
+                pmText.setText("매우나쁨");
+                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
+            }
 
                     // 여기서 위도,경도를 구할 수 있는데 그걸로 서울시 OO구 (지역구)를 가져와서
                     // 이 화면에서 바로 그 지역구의 미세먼지를 보여주자
@@ -191,15 +185,15 @@ import java.util.List;
 
           //          Toast.makeText(this, address, Toast.LENGTH_LONG).show();
 
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                }
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            }
     }
     final LocationListener gpsLocationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
@@ -227,6 +221,7 @@ import java.util.List;
         }
     };
 
+    // DB에서 DATA 가져옴
      private class GetData extends AsyncTask<String, Void, String> {
 
          ProgressDialog progressDialog;
@@ -362,6 +357,7 @@ import java.util.List;
 
      }
 
+     // 현재시간 구하는 스레드
      Thread t = new Thread() {
          @Override
          public void run() {
