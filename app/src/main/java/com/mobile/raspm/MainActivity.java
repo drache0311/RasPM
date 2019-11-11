@@ -37,11 +37,18 @@ public class MainActivity extends AppCompatActivity {
     private String mJsonString;
     Button intent_btn; // 즐겨찾기로 이동할 버튼
     private String delCity;
+    boolean abc = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
 
         setTitle("나만의 즐겨찾기");
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 //인텐트 선언 -> ㅕㄴ재액티비티, 넘어갈 액티비티
                 // 11.05 원래는 SubActivity로 이동해야하는데 테스트를 위해 FrontActivity로 이동시켜놨음!!!!!!!!!!!!!!!!
-                Intent intent = new Intent(MainActivity.this,FrontActivity.class);
+                Intent intent = new Intent(MainActivity.this,SubActivity.class);
                 //인텐트 시랭
                 startActivity(intent);
             }

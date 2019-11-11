@@ -2,6 +2,7 @@ package com.mobile.raspm;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -13,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,10 +64,59 @@ import java.util.List;
      private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
      private static String TAG = "phptest";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front);
+
+
+
+
+
+
+        /*
+        슬라이딩 뷰 테스트
+         */
+
+        SlidingView sv = new SlidingView(this);
+        View v1 = View.inflate(this, R.layout.activity_front, null);
+        View v2 = View.inflate(this, R.layout.activity_main, null);
+        View v3 = View.inflate(this, R.layout.activity_map, null);
+        sv.addView(v1);
+        sv.addView(v2);
+        sv.addView(v3);
+        setContentView(sv);
+        /* view 로 비교해보려했는데 오류남
+        if(sv.getView()==v1){
+            Intent go = new Intent(sv.getContext(),FrontActivity.class);
+            startActivity(go);
+            finish();
+        }else if(sv.getView()==v2){
+            Intent go = new Intent(sv.getContext(),MainActivity.class);
+            startActivity(go);
+            finish();
+        }else if(sv.getView()==v3){
+            Intent go = new Intent(sv.getContext(),MapActivity.class);
+            startActivity(go);
+            finish();
+        }
+         */
+
+
+
+
+        /*
+        슬라이딩 뷰 테스트 끝
+         */
+
+
+
+
+
+
+
+
 
 
         //
