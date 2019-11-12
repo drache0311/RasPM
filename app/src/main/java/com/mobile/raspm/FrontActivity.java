@@ -61,7 +61,7 @@ import java.util.List;
     LatLng currentPosition;
      long now ; // 시간 담음
      Date date;  // 시간 담음
-
+    String[] cityArray;
 
 
      private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
@@ -92,6 +92,7 @@ import java.util.List;
         currentTime = findViewById(R.id.currentTime);
         cityList = findViewById(R.id.cityList);
         rasMap = findViewById(R.id.rasMap);
+
 
         final Geocoder geocoder = new Geocoder(this);
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -140,13 +141,17 @@ import java.util.List;
                 e.printStackTrace();
                 Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
            }
-                    // 이 자리에 현재위치 지역구 이름 넣을꺼임
-                    // AddressLine(0) 이 서울시 OO구 인데 이걸 OO구만 짜르자
-                 /*   currentCity.setText("위도 : " + longitude + "\n" +
-                            "경도 : " + latitude + "\n" +
-                            "변환주소 : " + list.get(0).getAddressLine(0) + "\n" +
-                            "직접 쓴 구로구 : " + address);
-                  */
+
+           //     ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+            //      여기 부분 address에 서울시 OO구 를 짤라서 OO구를 넣은 건데 테스트 해봐야함
+            //     ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+            //    짤리긴 함 근데 주소가 미국이라 수요일날 진수 폰으로 확인해보자
+
+           cityArray = list.get(0).getAddressLine(0).split(" ");
+           address = cityArray[1];
+            Log.d(TAG, "★★★★★★★★★★★★★★★★ - " + address + "\n" + cityArray[0] + "\n" + cityArray[2] + "\n");
+
 
 
 

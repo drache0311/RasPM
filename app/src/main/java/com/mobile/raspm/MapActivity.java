@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +16,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -39,7 +41,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +68,15 @@ public class MapActivity extends AppCompatActivity
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    private static final int FASTEST_UPDATE_INTERVAL_MS = 10000; // 0.5초(500) ->10초(10000)
+
+// DB 연결 테스트 <시작>
+    private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
+    private static String TAG1 = "phptest";
+    private ArrayList<RaspData> mArrayList;
+    private RaspAdapter mAdapter;
+    private String mJsonString;
+// DB 연결 테스트 <끝>
 
 
     // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
@@ -82,6 +103,19 @@ public class MapActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // DB연결 <시작 1>
+
+        mArrayList = new ArrayList<>();
+        mAdapter = new RaspAdapter(this, mArrayList);
+
+
+        MapActivity.GetData task = new MapActivity.GetData();
+        task.execute( "http://" + IP_ADDRESS + "/getRasp.php", "");
+
+        // DB연결 < 끝 2 >
+
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -198,9 +232,24 @@ public class MapActivity extends AppCompatActivity
                         = new LatLng(location.getLatitude(), location.getLongitude());
 
 
+
+                // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+                // 이 밑에 markerSnippet 여기다가 라즈베리의 위도 경도를 넣어보자 !! (테스트해야함)
+                // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+
+
+
+
+
+
+
                 String markerTitle = getCurrentAddress(currentPosition);
+
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
+
+
 
                 Log.d(TAG, "onLocationResult : " + markerSnippet);
 
@@ -335,7 +384,7 @@ public class MapActivity extends AppCompatActivity
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
 
 
-        if (currentMarker != null) currentMarker.remove();
+     //   if (currentMarker != null) currentMarker.remove();
 
 
         LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -351,20 +400,22 @@ public class MapActivity extends AppCompatActivity
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
         mMap.moveCamera(cameraUpdate);
-
     }
+
+
 
 
     public void setDefaultLocation() {
 
 
-        //디폴트 위치, Seoul
-        LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
-        String markerTitle = "위치정보 가져올 수 없음";
-        String markerSnippet = "위치 퍼미션과 GPS 활성 요부 확인하세요";
+        //디폴트 위치, Seoul  // 라즈베리파이 ?
+        LatLng DEFAULT_LOCATION = new LatLng(mArrayList.get(0).getMember_latitude(), mArrayList.get(0).getMember_longitude());
+        String markerTitle = "라즈베리 파이";
+        String markerSnippet = "위도:" + mArrayList.get(0).getMember_latitude()
+                + " 경도:" + mArrayList.get(0).getMember_longitude();
 
 
-        if (currentMarker != null) currentMarker.remove();
+      //  if (currentMarker != null) currentMarker.remove();
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(DEFAULT_LOCATION);
@@ -374,8 +425,8 @@ public class MapActivity extends AppCompatActivity
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mMap.addMarker(markerOptions);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
-        mMap.moveCamera(cameraUpdate);
+     //   CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
+     //   mMap.moveCamera(cameraUpdate);
 
     }
 
@@ -519,4 +570,150 @@ public class MapActivity extends AppCompatActivity
                 break;
         }
     }
+
+
+
+    private class GetData extends AsyncTask<String, Void, String> {
+
+        ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(MapActivity.this,
+                    "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+            Log.d(TAG1, "response - " + result);
+
+            if (result == null){
+
+            }
+            else {
+
+                mJsonString = result;
+                showResult();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String postParameters = params[1];
+
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG1, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG1, "GetData : Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+
+    private void showResult(){
+
+        String TAG_JSON="webnautes";
+        String TAG_latitude = "latitude";
+        String TAG_longitude = "longitude";
+        String TAG_pm10 ="pm10";
+        String TAG_pm25 = "pm25";
+
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                double latitude = item.getDouble(TAG_latitude);
+                double longitude = item.getDouble(TAG_longitude);
+                int pm10 = item.getInt(TAG_pm10);
+                int pm25 = item.getInt(TAG_pm25);
+
+                RaspData raspData = new RaspData();
+
+                raspData.setMember_latitude(latitude);
+                raspData.setMember_longitude(longitude);
+                raspData.setMember_pm10(pm10);
+                raspData.setMember_pm25(pm25);
+
+                mArrayList.add(raspData);
+                mAdapter.notifyDataSetChanged();
+            }
+
+
+
+        } catch (JSONException e) {
+
+            Log.d(TAG1, "showResult : ", e);
+        }
+
+    }
+
+
+
+
+
+
 }
