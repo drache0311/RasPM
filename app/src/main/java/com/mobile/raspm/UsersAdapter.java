@@ -102,6 +102,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     v.getContext().startActivity(intent);
 
+
                 } else if (mList.get(position).getMember_display() == 1) { // display가 1이면 밑의 문 실행 !!!
                     // 맨 밑의 소스 ( 삭제할지 안할지 정하는 알림창 )
                     show(v,position);

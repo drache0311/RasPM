@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ import java.util.List;
     private ArrayList<PersonalData> mArrayList;
      private UsersAdapter mAdapter;
      private ImageView faceIcon; // 얼굴
+     private Button cityList;
+     private Button rasMap;
     String address; // OO구 담을 변수
     LatLng currentPosition;
      long now ; // 시간 담음
@@ -69,54 +72,6 @@ import java.util.List;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front);
-
-
-
-
-
-
-        /*
-        슬라이딩 뷰 테스트
-         */
-
-        SlidingView sv = new SlidingView(this);
-        View v1 = View.inflate(this, R.layout.activity_front, null);
-        View v2 = View.inflate(this, R.layout.activity_main, null);
-        View v3 = View.inflate(this, R.layout.activity_map, null);
-        sv.addView(v1);
-        sv.addView(v2);
-        sv.addView(v3);
-        setContentView(sv);
-        /* view 로 비교해보려했는데 오류남
-        if(sv.getView()==v1){
-            Intent go = new Intent(sv.getContext(),FrontActivity.class);
-            startActivity(go);
-            finish();
-        }else if(sv.getView()==v2){
-            Intent go = new Intent(sv.getContext(),MainActivity.class);
-            startActivity(go);
-            finish();
-        }else if(sv.getView()==v3){
-            Intent go = new Intent(sv.getContext(),MapActivity.class);
-            startActivity(go);
-            finish();
-        }
-         */
-
-
-
-
-        /*
-        슬라이딩 뷰 테스트 끝
-         */
-
-
-
-
-
-
-
-
 
 
         //
@@ -135,7 +90,8 @@ import java.util.List;
         mRecyclerView.setAdapter(mAdapter);
         // txtResult = (TextView)findViewById(R.id.txtResult);
         currentTime = findViewById(R.id.currentTime);
-
+        cityList = findViewById(R.id.cityList);
+        rasMap = findViewById(R.id.rasMap);
 
         final Geocoder geocoder = new Geocoder(this);
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -153,6 +109,20 @@ import java.util.List;
         t.start();
 
 
+        cityList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goMain = new Intent(FrontActivity.this,MainActivity.class);
+                startActivity(goMain);
+            }
+        });
+        rasMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goMap = new Intent(FrontActivity.this,MapActivity.class);
+                startActivity(goMap);
+            }
+        });
 
 
         if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
