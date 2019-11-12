@@ -24,7 +24,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 //implements View.OnClickListener 맨 밑의 onClick 쓰려면 이거 추가
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHolder>  {
+public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHolder> {
 
     private ArrayList<PersonalData> mList = null;
     private Activity context = null;
@@ -41,7 +41,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        public  final View mview;
+        public final View mview;
         protected TextView cityName;
         protected TextView pm10Value;
         protected TextView pm25Value;
@@ -52,7 +52,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
 
         public CustomViewHolder(View view) {
             super(view);
-            mview=view;
+            mview = view;
             this.cityName = (TextView) view.findViewById(R.id.textView_list_cityName);
             this.pm10Value = (TextView) view.findViewById(R.id.textView_list_pm10Value);
             this.pm25Value = (TextView) view.findViewById(R.id.textView_list_pm25Value);
@@ -90,23 +90,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
 
         // 즐겨찾기 추가할 지 삭제할 지 작동하는 곳
         // 서브에서 (강서)구 를 클릭하면 mList.get(position).getMember_cityName() 으로 강서구라는 String값을 가져옴
-        viewholder.cityName.setOnClickListener(new View.OnClickListener(){
+        viewholder.cityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mList.get(position).getMember_display() == 0) { // display가 0이면 밑의 문 실행 !!!
-                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
-
-                    UpdateData task = new UpdateData();
-                    task.execute("http://" + IP_ADDRESS + "/updateDb.php", mList.get(position).getMember_cityName());
-
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
-
-
-                } else if (mList.get(position).getMember_display() == 1) { // display가 1이면 밑의 문 실행 !!!
-                    // 맨 밑의 소스 ( 삭제할지 안할지 정하는 알림창 )
-                    show(v,position);
-                }
+                show(v, position);
             }
         });
 
@@ -122,8 +109,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         @Override
         protected String doInBackground(String... params) {
 
-            String serverURL = (String)params[0];
-            String bookName = (String)params[1];
+            String serverURL = (String) params[0];
+            String bookName = (String) params[1];
             String postParameters = "name=" + bookName;
 
 
@@ -149,10 +136,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
                 Log.d(TAG, "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -163,7 +149,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
 
@@ -185,39 +171,61 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
     }
 
     // 알림창 뜬 후 Yes면 삭제 , No면은 삭제안함
-void show(final View v,final int position){
-    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    builder.setTitle("즐겨찾기 삭제");
-    builder.setMessage("삭제하시겠습니까?");
-    // Yes 클릭시
-    builder.setPositiveButton("예",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // display를 0으로 바꿈
-                    Toast.makeText(context, "선택한 값 : " + mList.get(position).getMember_cityName() + "디스플==" + mList.get(position).getMember_display(), Toast.LENGTH_SHORT).show();
+    void show(final View v, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                    UpdateData task = new UpdateData();
-                    task.execute("http://" + IP_ADDRESS + "/deleteDb.php", mList.get(position).getMember_cityName());
+        if (mList.get(position).getMember_display() == 0) { // display가 0이면 밑의 문 실행 !!!
+            builder.setTitle("즐겨찾기 추가");
+            builder.setMessage("추가 하시겠습니까?");
+            // Yes 클릭시
+            builder.setPositiveButton("예",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // display를 1로 바꾸어 즐겨찾기에 추가
 
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    v.getContext().startActivity(intent);
-                }
-            });
-    // No 클릭 시
-    builder.setNegativeButton("아니오",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(v.getContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
-                }
-            });
-    builder.show();
+                            UpdateData task = new UpdateData();
+                            task.execute("http://" + IP_ADDRESS + "/updateDb.php", mList.get(position).getMember_cityName());
+
+                            Toast.makeText(v.getContext(), "추가 했습니다.", Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            v.getContext().startActivity(intent);
+                        }
+                    });
+            // No 클릭 시
+            builder.setNegativeButton("아니오",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(v.getContext(), "취소 했습니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+            builder.show();
+        } else {
+            builder.setTitle("즐겨찾기 삭제");
+            builder.setMessage("삭제하시겠습니까?");
+            // Yes 클릭시
+            builder.setPositiveButton("예",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // display를 0으로 바꿈
+                            Toast.makeText(v.getContext(), "삭제 했습니다.", Toast.LENGTH_LONG).show();
+
+                            UpdateData task = new UpdateData();
+                            task.execute("http://" + IP_ADDRESS + "/deleteDb.php", mList.get(position).getMember_cityName());
+
+                            Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            v.getContext().startActivity(intent);
+                        }
+                    });
+            // No 클릭 시
+            builder.setNegativeButton("아니오",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(v.getContext(), "취소 했습니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+            builder.show();
+        }
+    }
 }
-
-
-
-
-
-
-}
-
 
