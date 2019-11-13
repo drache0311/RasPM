@@ -11,31 +11,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5pt" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="지역구"
             android:layout_marginLeft="15pt"
-            android:id="@+id/bookName"/>
+            android:id="@+id/bookName"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="미세먼지"
             android:layout_marginLeft="15pt"
-            android:id="@+id/bookPm10"/>
+            android:id="@+id/bookPm10"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/bookpm25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15pt"
-            android:text="초미세먼지" />
+            android:layout_marginLeft="20pt"
+            android:text="초미세먼지"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/bookState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15pt"
-            android:text="상태" />
+            android:layout_marginLeft="35pt"
+            android:text="상태"
+            android:textStyle="bold" />
     </LinearLayout>
     <!-- layout_weight가 한 화면에 보이는 항목 수 : 드래그로 위아래 이동 가능-->
     <androidx.recyclerview.widget.RecyclerView
@@ -52,6 +57,7 @@
         android:id="@+id/button_go"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:background="#8CFF98"
         android:text="즐겨찾기 추가"/>
 
 </LinearLayout>

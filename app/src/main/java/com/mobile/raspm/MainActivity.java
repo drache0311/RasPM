@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("나만의 즐겨찾기");
         layout = findViewById(R.id.mainMain);
-        layout.setBackgroundResource(R.color.colorBlue);
+        // 배경색
+        layout.setBackgroundResource(R.color.colorYblue);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

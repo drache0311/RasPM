@@ -47,7 +47,7 @@ public class SubActivity extends AppCompatActivity {
         setTitle("즐겨찾기 추가하기");
 
         layout = findViewById(R.id.subMain);
-        layout.setBackgroundResource(R.color.colorBlue);
+        layout.setBackgroundResource(R.color.colorYblue);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

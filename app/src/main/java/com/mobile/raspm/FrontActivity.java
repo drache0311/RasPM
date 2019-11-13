@@ -93,7 +93,6 @@ import java.util.List;
         cityList = findViewById(R.id.cityList);
         rasMap = findViewById(R.id.rasMap);
 
-
         final Geocoder geocoder = new Geocoder(this);
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
