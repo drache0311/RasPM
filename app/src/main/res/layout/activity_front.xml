@@ -47,6 +47,7 @@
             android:id="@+id/smile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#00ffffff"
             android:src="@drawable/smile" />
 
         <!-- 미세먼지 수치에 따른 좋음,보통,나쁨,매우나쁨 -->
@@ -86,8 +87,7 @@
                 android:background="@drawable/raslogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50pt"
-                android:text="라즈베리"/>
+                android:layout_marginLeft="50pt" />
 
             <!-- 라즈베리 2 버튼 이미지 -->
             <Button
