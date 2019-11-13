@@ -57,6 +57,7 @@ import java.util.List;
      private ImageView faceIcon; // 얼굴
      private Button cityList;
      private Button rasMap;
+     private int currentPm;
     String address; // OO구 담을 변수
     LatLng currentPosition;
      long now ; // 시간 담음
@@ -145,7 +146,7 @@ import java.util.List;
             //      여기 부분 address에 서울시 OO구 를 짤라서 OO구를 넣은 건데 테스트 해봐야함
             //     ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
-            //    짤리긴 함 근데 주소가 미국이라 수요일날 진수 폰으로 확인해보자
+            //    짤리긴 함 근데 주소가 미국이라 수요일날 진수 폰으로 확인해보자 -> 강서구로 잡혀서 일단 보류
 
            cityArray = list.get(0).getAddressLine(0).split(" ");
            address = cityArray[1];
@@ -153,30 +154,34 @@ import java.util.List;
 
 
 
-
-            // 미세먼지 수치에 따라 표정 아이콘 변화시키기
-            if(UsersAdapter.currentPm10<=30){ // 미세먼지 좋음
-                faceIcon.setImageResource(R.drawable.over0);
-                layout.setBackgroundResource(R.color.colorBlue);
-                pmText.setText("좋음");
-                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-            }else if(UsersAdapter.currentPm10<=80){ // 미세먼지 보통
-                faceIcon.setImageResource(R.drawable.smile);
-                layout.setBackgroundResource(R.color.colorGreen);
-                pmText.setText("보통");
-                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-            }else if(UsersAdapter.currentPm10<=150){ // 미세먼지 나쁨
-                faceIcon.setImageResource(R.drawable.over150);
-                layout.setBackgroundResource(R.color.colorYellow);
-                pmText.setText("나쁨");
-                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
-            }else{ // 미세먼지 매우나쁨
-                faceIcon.setImageResource(R.drawable.over180);
-                layout.setBackgroundResource(R.color.colorOrange);
-                pmText.setText("매우나쁨");
-                pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
+            if(UsersAdapter.currentName!=null) {
+                // 미세먼지 수치에 따라 표정 아이콘 변화시키기
+                if (UsersAdapter.currentPm10 <= 30) { // 미세먼지 좋음
+                    faceIcon.setImageResource(R.drawable.over0);
+                    layout.setBackgroundResource(R.color.colorBlue);
+                    pmText.setText("좋음");
+                    pmText.setTextColor(getResources().getColor(R.color.colorWhite));
+                    pm10Value.setText("미세먼지 : " + UsersAdapter.currentPm10);
+                } else if (UsersAdapter.currentPm10 <= 80) { // 미세먼지 보통
+                    faceIcon.setImageResource(R.drawable.smile);
+                    layout.setBackgroundResource(R.color.colorGreen);
+                    pmText.setText("보통");
+                    pmText.setTextColor(getResources().getColor(R.color.color80));
+                    pm10Value.setText("미세먼지 : " + UsersAdapter.currentPm10);
+                } else if (UsersAdapter.currentPm10 <= 150) { // 미세먼지 나쁨
+                    faceIcon.setImageResource(R.drawable.over150);
+                    layout.setBackgroundResource(R.color.colorYellow);
+                    pmText.setText("나쁨");
+                    pmText.setTextColor(getResources().getColor(R.color.color150));
+                    pm10Value.setText("미세먼지 : " + UsersAdapter.currentPm10);
+                } else { // 미세먼지 매우나쁨
+                    faceIcon.setImageResource(R.drawable.over180);
+                    layout.setBackgroundResource(R.color.colorOrange);
+                    pmText.setText("매우나쁨");
+                    pmText.setTextColor(getResources().getColor(R.color.color180));
+                    pm10Value.setText("미세먼지 : " + UsersAdapter.currentPm10);
+                }
             }
-
                     // 여기서 위도,경도를 구할 수 있는데 그걸로 서울시 OO구 (지역구)를 가져와서
                     // 이 화면에서 바로 그 지역구의 미세먼지를 보여주자
                     // + 미세먼지 값에 따른 아이콘의 표정변화 추가 (이미지)

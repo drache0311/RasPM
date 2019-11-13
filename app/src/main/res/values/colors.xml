@@ -9,4 +9,7 @@
     <color name="colorOrange">#FD8F00</color>
     <color name="colorWhite">#FDFDFD</color>
     <color name="colorYblue">#E0FAFB</color>
+    <color name="color80">#FFA9A9</color>
+    <color name="color150">#FF5555</color>
+    <color name="color180">#FF0000</color>
 </resources>

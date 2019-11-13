@@ -82,16 +82,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         viewholder.currentPm10 = Integer.parseInt(mList.get(position).getMember_pm10Value());
         viewholder.currentPm25 = Integer.parseInt(mList.get(position).getMember_pm25Value());
 
-        currentName = viewholder.currentName;
-        currentPm10 = viewholder.currentPm10;
-        currentPm25 = viewholder.currentPm25;
+        if(viewholder.currentName.equals("구로구")) {
+            currentName = viewholder.currentName;
+            currentPm10 = viewholder.currentPm10;
+            currentPm25 = viewholder.currentPm25;
+        }
 
-
-        if(currentPm10<=30){
+        if(viewholder.currentPm10<=30){
             viewholder.pmState.setText("좋음");
-        }else if(currentPm10<=80){
+        }else if(viewholder.currentPm10<=80){
             viewholder.pmState.setText("보통");
-        }else if(currentPm10<=150){
+        }else if(viewholder.currentPm10<=150){
             viewholder.pmState.setText("나쁨");
         }else{
             viewholder.pmState.setText("매우 나쁨");

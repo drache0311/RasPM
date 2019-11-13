@@ -23,12 +23,14 @@
             android:visibility="gone"
             android:id="@+id/currentCity" />
         <TextView
-            android:layout_width="90dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginTop="20pt"
             android:gravity="center"
             android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="80px"
             android:text="구로구"
             android:id="@+id/currentCity2" />
 
@@ -81,7 +83,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- 라즈베리 1 버튼 이미지 -->
+            <!-- 라즈베리 구글 지도 이동 버튼 -->
             <Button
                 android:id="@+id/rasMap"
                 android:background="@drawable/raslogo"
@@ -89,13 +91,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50pt" />
 
-            <!-- 라즈베리 2 버튼 이미지 -->
+            <!-- 서울 지역구 리스트 보기 버튼-->
             <Button
                 android:id="@+id/cityList"
-                android:layout_width="wrap_content"
+                android:background="@drawable/iseoulu"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5pt"
-                android:text="지역구 확인" />
+                android:layout_marginLeft="5pt" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
