@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
     private static String TAG = "phptest";
 
+    private LinearLayout layout;
     private ArrayList<PersonalData> mArrayList;
     private UsersAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -45,12 +47,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
-
         setTitle("나만의 즐겨찾기");
+        layout = findViewById(R.id.mainMain);
+        layout.setBackgroundResource(R.color.colorBlue);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

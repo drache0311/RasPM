@@ -45,6 +45,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         protected TextView cityName;
         protected TextView pm10Value;
         protected TextView pm25Value;
+        protected TextView pmState;
         protected int display;
         protected String currentName;
         protected int currentPm10;
@@ -56,7 +57,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
             this.cityName = (TextView) view.findViewById(R.id.textView_list_cityName);
             this.pm10Value = (TextView) view.findViewById(R.id.textView_list_pm10Value);
             this.pm25Value = (TextView) view.findViewById(R.id.textView_list_pm25Value);
-
+            this.pmState = view.findViewById(R.id.textView_list_pmState);
         }
     }
 
@@ -85,8 +86,18 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.CustomViewHo
         currentPm10 = viewholder.currentPm10;
         currentPm25 = viewholder.currentPm25;
 
-        // 클릭리스너
-        //viewholder.cityName.setOnClickListener(this);
+
+        if(currentPm10<=30){
+            viewholder.pmState.setText("좋음");
+        }else if(currentPm10<=80){
+            viewholder.pmState.setText("보통");
+        }else if(currentPm10<=150){
+            viewholder.pmState.setText("나쁨");
+        }else{
+            viewholder.pmState.setText("매우 나쁨");
+        }
+
+
 
         // 즐겨찾기 추가할 지 삭제할 지 작동하는 곳
         // 서브에서 (강서)구 를 클릭하면 mList.get(position).getMember_cityName() 으로 강서구라는 String값을 가져옴

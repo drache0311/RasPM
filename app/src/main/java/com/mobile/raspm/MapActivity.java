@@ -64,6 +64,7 @@ public class MapActivity extends AppCompatActivity
 
     private GoogleMap mMap;
     private Marker currentMarker = null;
+    private int markerCount = 0;
 
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -239,11 +240,6 @@ public class MapActivity extends AppCompatActivity
 
 
 
-
-
-
-
-
                 String markerTitle = getCurrentAddress(currentPosition);
 
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
@@ -387,19 +383,22 @@ public class MapActivity extends AppCompatActivity
      //   if (currentMarker != null) currentMarker.remove();
 
 
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        if(markerCount<2) {
+            LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(currentLatLng);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(currentLatLng);
+            markerOptions.title(markerTitle);
+            markerOptions.snippet(markerSnippet);
+            markerOptions.draggable(true);
 
 
-        currentMarker = mMap.addMarker(markerOptions);
+            currentMarker = mMap.addMarker(markerOptions);
+            markerCount++;
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        mMap.moveCamera(cameraUpdate);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+            mMap.moveCamera(cameraUpdate);
+        }
     }
 
 
@@ -411,8 +410,8 @@ public class MapActivity extends AppCompatActivity
         //디폴트 위치, Seoul  // 라즈베리파이 ?
         LatLng DEFAULT_LOCATION = new LatLng(mArrayList.get(0).getMember_latitude(), mArrayList.get(0).getMember_longitude());
         String markerTitle = "라즈베리 파이";
-        String markerSnippet = "위도:" + mArrayList.get(0).getMember_latitude()
-                + " 경도:" + mArrayList.get(0).getMember_longitude();
+        String markerSnippet = "미세먼지 : " + mArrayList.get(0).getMember_pm10()
+                + " 초미세먼지 :" + mArrayList.get(0).getMember_pm25();
 
 
       //  if (currentMarker != null) currentMarker.remove();
@@ -424,6 +423,7 @@ public class MapActivity extends AppCompatActivity
         markerOptions.draggable(true);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mMap.addMarker(markerOptions);
+        markerCount++;
 
      //   CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
      //   mMap.moveCamera(cameraUpdate);

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ public class SubActivity extends AppCompatActivity {
     private static String IP_ADDRESS = "ec2-15-164-153-137.ap-northeast-2.compute.amazonaws.com/phpdb";
     private static String TAG = "phptest";
 
+    private LinearLayout layout;
     private ArrayList<PersonalData> mArrayList;
     private UsersAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -44,6 +46,8 @@ public class SubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub);
         setTitle("즐겨찾기 추가하기");
 
+        layout = findViewById(R.id.subMain);
+        layout.setBackgroundResource(R.color.colorBlue);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

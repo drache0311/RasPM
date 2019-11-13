@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/subMain">
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지역구"
+        android:layout_marginLeft="10pt"
+        android:id="@+id/bookName"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="미세먼지"
+        android:padding="15dp"
+        android:id="@+id/bookPm10"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="초미세먼지"
+        android:padding="15dp"
+        android:id="@+id/bookpm25"/>
+  </LinearLayout>
 
  <!-- layout_weight가 한 화면에 보이는 항목 수 : 드래그로 위아래 이동 가능-->
-
  <androidx.recyclerview.widget.RecyclerView
      android:layout_width="match_parent"
      android:layout_height="0dp"

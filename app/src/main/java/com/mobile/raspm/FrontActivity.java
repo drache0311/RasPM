@@ -162,7 +162,7 @@ import java.util.List;
                 pmText.setText("좋음");
                 pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
             }else if(UsersAdapter.currentPm10<=80){ // 미세먼지 보통
-                faceIcon.setImageResource(R.drawable.over180);
+                faceIcon.setImageResource(R.drawable.smile);
                 layout.setBackgroundResource(R.color.colorGreen);
                 pmText.setText("보통");
                 pm10Value.setText("미세먼지 : "+ UsersAdapter.currentPm10);
