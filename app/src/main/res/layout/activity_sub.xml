@@ -12,20 +12,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="지역구"
-        android:layout_marginLeft="10pt"
+        android:layout_marginLeft="15pt"
         android:id="@+id/bookName"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="미세먼지"
-        android:padding="15dp"
+        android:layout_marginLeft="15pt"
         android:id="@+id/bookPm10"/>
     <TextView
+        android:id="@+id/bookpm25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="초미세먼지"
-        android:padding="15dp"
-        android:id="@+id/bookpm25"/>
+        android:layout_marginLeft="15pt"
+        android:text="초미세먼지" />
+    <TextView
+        android:id="@+id/bookState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15pt"
+        android:text="상태" />
   </LinearLayout>
 
  <!-- layout_weight가 한 화면에 보이는 항목 수 : 드래그로 위아래 이동 가능-->

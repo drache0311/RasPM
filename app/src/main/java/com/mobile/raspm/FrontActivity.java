@@ -150,7 +150,7 @@ import java.util.List;
 
            cityArray = list.get(0).getAddressLine(0).split(" ");
            address = cityArray[1];
-            Log.d(TAG, "★★★★★★★★★★★★★★★★ - " + address + "\n" + cityArray[0] + "\n" + cityArray[2] + "\n");
+            Log.d(TAG, "★★★★★★★★★★★★★★★★ - " + latitude+ "\n" + longitude + "\n 리스트 :" + list + "\n" + list.get(0)+ "\n");
 
 
 
